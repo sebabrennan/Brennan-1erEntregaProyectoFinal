@@ -117,14 +117,15 @@ function mostrarMenuUsuarios()
 {
     let opcion = 0;
    
-    while(opcion!==5)
+    while(opcion!==6)
     {
         opcion = Number( prompt(`Seleccione una acción:
                            1. Agregar Usuario
                            2. Eliminar Usuario
                            3. Modificar Usuario
                            4. Listar usuarios
-                           5. Volver al menú principal`));
+                           5. Buscar Usuario
+                           6. Volver al menú principal`));
 
         switch(opcion)
         {
@@ -138,12 +139,23 @@ function mostrarMenuUsuarios()
                 eliminarUsuario();
                 break;
             }
+            case 3: 
+            {
+                modificarUsuario();
+                break;
+            }
             case 4:
             {
                 listarUsuarios();
                 break;
             }
-            default:{
+            case 5:
+            {
+                buscarUsuario();
+                break;
+            }
+            default:
+            {
                 mostrarMenu();
                 break;
             }
@@ -166,15 +178,68 @@ function agregarUsuario()
     usuarios.push(usuario);
 }
 
+function eliminarUsuario(){
+
+    let id= Number(prompt("Ingrese el id del usuario que quiere eliminar"));
+
+    let encontrado = usuarios.find((usuario)=>usuario.id===id);
+
+    if(!encontrado)
+    {
+        alert("Usuario no Encontrado");
+    }
+    else{
+
+        let index = usuarios.indexOf(encontrado);
+
+        usuarios.splice(index,1);
+
+        console.log("Borrar usuario");
+        console.log(usuarios);
+    }
+}
+
+function modificarUsuario()
+{
+    let id= Number(prompt("Ingrese el id del usuario que quiere modificar"));
+
+    let existe = usuarios.some((usuario)=>usuario.id===id);
+
+    if(existe)
+    {
+        let encontrado = usuarios.find((usuario)=>usuario.id===id);
+        let nuevoNombre = prompt("Ingrese el nuevo nombre");
+        let nuevoApellido = prompt("Ingrese el nuevo apellido");
+
+        encontrado.nombre = nuevoNombre;
+        encontrado.apellido= nuevoApellido;
+
+        console.log("MODIFICACION")
+        console.log(usuarios);
+    }
+    else
+    {
+        alert("Usuario no encontrado")
+    }
+
+}
 
 function listarUsuarios(){
-   console.log("LISTAR USUARIOS")
+    console.log("LISTAR USUARIOS")
    
-   usuarios.forEach(
+    usuarios.forEach(
        (usuario)=>{     
             console.log(usuario.id+" "+usuario.nombre+" "+usuario.apellido);
        }
-   );
+    );
 }
 
+function buscarUsuario()
+{
+    let nombre = prompt("Ingresa el nombre que quieres buscar");
+
+    let encontrados = usuarios.filter((usuario)=>usuario.nombre.toLowerCase().indexOf(nombre.toLocaleLowerCase())!==-1);
+
+    console.log("BUSCAR USUARIOS:", encontrados);
+}
 
