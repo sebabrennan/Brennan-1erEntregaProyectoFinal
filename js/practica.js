@@ -6,14 +6,27 @@ class Usuario{
         this.apellido=apellido;
     }
 }
-let sorrentinosPrice = 400;
-let fideosPrice = 300;
-let panzottisPrice = 400;
-let opcionProductos = 0; 
+
+class Productos{
+    constructor(nombre,precio) {
+        this.nombre=nombre
+        this.precio=precio
+    }
+}
+
+const fideos = new Productos("Fideos",300)
+const sorrentinos = new Productos("Sorrentinos", 400);
+const panzottis = new Productos("Panzottis",400);
+
+const productos = [fideos, sorrentinos, panzottis]
+
+let opcionProductos = 0;
 
 let dineroIngresado = 0;
 
 const usuarios = [];
+
+mostrarMenu();
 
 function mostrarMenu()
 {
@@ -46,14 +59,12 @@ function mostrarMenu()
     }
 }
 
-mostrarMenu();
-
-function mostrarMenuProductos()
-{
+function mostrarMenuProductos(){
+    
     const opcion = prompt(`Seleccione una opcion: 
-                     1. FIDEOS (${fideosPrice}ARS)
-                     2. SORRENTINOS (${sorrentinosPrice}ARS)
-                     3. PANZOTIS (${panzottisPrice}ARS)
+                     1. FIDEOS (${fideos.precio}ARS)
+                     2. SORRENTINOS (${sorrentinos.precio}ARS)
+                     3. PANZOTIS (${panzottis.precio}ARS)
                      4. FIN`);
     
     if(opcion!=4){   
@@ -67,7 +78,10 @@ function mostrarMenuProductos()
 
 function venderProducto(opcion)
    {
-      switch (opcion) 
+    pedirDinero(productos[opcion-1].precio)
+   }
+
+     /*  switch (opcion) 
       {
          case "1":
          {
@@ -89,8 +103,7 @@ function venderProducto(opcion)
             alert("opcion invalida")
             break;
          }      
-      }
-   }
+      } */
 
 function pedirDinero(priceProduct)
 {
